@@ -7,10 +7,6 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
-
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -21,3 +17,20 @@
 /yarn-error.log
 
 .byebug_history
+
+# Ignore Docker data
+postgres-data/
+redis-data/
+
+# Ignoring spec coverage report
+coverage
+# Ignore application configuration
+/config/application.yml
+# Ignore RubyMine/Idea files
+.idea/
+# Ignove Visual Studio Code
+.vscode
+# Ignore Mac OS Files
+.DS_Store
+# Ignore DockStation files
+.env
