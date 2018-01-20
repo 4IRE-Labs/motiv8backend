@@ -2,28 +2,27 @@
 
 class CheckTransactions
   prepend SimpleCommand
-  attr_accessor :donations, :transactions
+  attr_accessor :transactions
 
-  def initialize(donations, transactions)
-    @donations = donations
+  def initialize(transactions)
+    @donations = Wallet.all
     @transactions = transactions
   end
 
   def call
-    @response = RestClient.get "http://rinkeby.etherscan.io/api", params: {
-      module: 'account',
-      action: 'txlist',
-      address: @address,
-      startblock: 0,
-      endblock: 1622525,
-      sort: 'asc',
-      apikey: 'KRZ3YKTYGI6YMSGMMKYVRPIC18AX1B6MDQ'
-    }
 
+    @found_transactions = []
 
+    @transactions['result'].each do |tnx|
+      @donations.each do |don|
+        @transactions << tnx['to'] if don.address == tnx['to']
+      end
+    end
+
+    @found_transactions
   rescue => exception
     errors.add(:transactions, exception.to_s)
   else
-    JSON.parse(@response)
+    @found_transactions
   end
 end

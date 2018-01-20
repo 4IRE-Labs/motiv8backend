@@ -14,13 +14,8 @@ module Api::V1
     def show; end
 
     def check_donation
-      command = GetTransactionList.call(params[:address])
-      if command.success?
-        @donation = command.result
-        render :check_donation, status: 200
-      else
-        render json: { errors: command.errors }, status: :unprocessable_entity
-      end
+      @donation = MyOwn.new.txn_check(params[:address])
+      render :check_donation, status: 200
     end
 
     private

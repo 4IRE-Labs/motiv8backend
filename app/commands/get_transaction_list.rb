@@ -14,11 +14,10 @@ class GetTransactionList
       action: 'txlist',
       address: @address,
       startblock: 0,
-      endblock: 1622525,
+      endblock: 145900,
       sort: 'asc',
       apikey: 'KRZ3YKTYGI6YMSGMMKYVRPIC18AX1B6MDQ'
     }
-
 
   rescue => exception
     errors.add(:transactions, exception.to_s)
