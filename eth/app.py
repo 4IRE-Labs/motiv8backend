@@ -15,21 +15,27 @@ parser.add_argument('--tx', dest='tx',
 parser.add_argument('--title', dest='title',
                    help='Title of badge that user will receive')
 
+parser.add_argument('--test', dest='test',
+                    help='If yes we will use defaul params')
+
 args = parser.parse_args()
 
-if args.title is None or args.tx is None or args.owner is None:
+if args.test == 'yes':
+    badge_owner = '0x99a4572656eb49ffeefbe9588f8e7ab0f8d6eb5e'
+    donation_tx = '112'
+    badge_title = 'Test 112'
+elif args.title is None or args.tx is None or args.owner is None:
     parser.print_help()
     exit(0)
+else:
+    #Define who will receive badge
+    badge_owner = args.owner
 
-#Define who will receive badge
-badge_owner = args.owner
+    #Define donation Tx what will be used to receive badge
+    donation_tx = args.tx
 
-#Define donation Tx what will be used to receive badge
-donation_tx = args.tx
-
-#Define badge title
-badge_title = args.title
-
+    #Define badge title
+    badge_title = args.title
 
 ######### TEST RPC CONFIGURATION #########
 
@@ -60,10 +66,15 @@ sender_pk = bytes(bytearray.fromhex('1cf8c24523faceab6acc576c4a8eb36cbe2d4230826
 abi = json.load(open('contracts/M8BadgeToken.json'))
 
 #Define gas
-gas = 123145
+gas = 150000
 
 # Contract instance in concise mode
 contract_instance = w3.eth.contract(abi['abi'], contract_address, ContractFactoryClass=ConciseContract)
+
+
+# check bumber of tokens
+# tokens = contract_instance.tokensOfOwner(badge_owner);
+# print('Tokens: {}'.format(tokens))
 
 # Contract creates new badge
 transact = {
@@ -78,29 +89,28 @@ transact = {
 ct = ContractTranslator(abi['abi'])
 txdata = ct.encode_function_call("create", [donation_tx, badge_title, badge_owner])
 
-
 # Load data with configuration and nonce
-data = json.load(open('data.txt', 'r'))
+# data = json.load(open('data.txt', 'r'))
+#if 'nonce' not in data:
+#    data['nonce'] = w3.eth.getTransactionCount(sender_address)
+#else:
+#    nonce = data["nonce"] + 1
+#nonce = max(nonce, w3.eth.getTransactionCount(sender_address))
 
-if 'nonce' not in data:
-    data['nonce'] = w3.eth.getTransactionCount(sender_address)
-else:
-    nonce = data["nonce"] + 1
-
-nonce = max(nonce, w3.eth.getTransactionCount(sender_address))
+nonce = w3.eth.getTransactionCount(sender_address)
 
 tx = Transaction(
     nonce=nonce,
-    gasprice=gas,
-    startgas=150000,
+    gasprice=20000000000,
+    startgas=6638084,
     to=contract_address,
     value=0,
     data=txdata,
 )
 
 # Save nonce to file
-data['nonce'] = nonce
-json.dump(data, open('data.txt', 'w'))
+#data['nonce'] = nonce
+#json.dump(data, open('data.txt', 'w'))
 
 tx.sign(sender_pk)
 
