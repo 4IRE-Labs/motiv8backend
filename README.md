@@ -9,6 +9,4 @@ $ source venv/bin/activate
 pip install -r requirements.txt
 
 4. Run script use command:
-$ venv/bin/python app.py --owner 0x05e7042c3C0753e5B506262047a3D327d3Ac0563 --tx 101 --title 'Finallyy !!!'
-
-venv/bin/python app.py --owner 0x05e7042c3C0753e5B506262047a3D327d3Ac0563 --challenge 101 --title 'Hey'
+$ venv/bin/python app.py --owner 0x05e7042c3C0753e5B506262047a3D327d3Ac0563 --tx 101 --challenge 101

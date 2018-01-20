@@ -36,7 +36,7 @@ class MyOwn
 
   def send_to_smartcontract(donations, address)
     donations.each do |don|
-      system("venv/bin/python app.py --owner #{address} --tx #{don} --title 'Finallyy !!!'")
+      system("venv/bin/python app.py --owner #{address} --tx #{don} --challenge #{don}")
     end
   end
 end
