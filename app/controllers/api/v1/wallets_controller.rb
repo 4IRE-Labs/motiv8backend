@@ -14,12 +14,12 @@ module Api::V1
     def show; end
 
     def check_donation
-      
-      if params
-        @donation = params
+      command = GetTransactionList.call(params[:address])
+      if command.success?
+        @donation = command.result
         render :check_donation, status: 200
       else
-        render json: { errors: 'No Transactions made' }, status: :unprocessable_entity
+        render json: { errors: command.errors }, status: :unprocessable_entity
       end
     end
 

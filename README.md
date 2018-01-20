@@ -1,24 +1,12 @@
-# README
+1. Create virtual environment
+$ virtualenv venv
+python3 -m virtualenv venv
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+2. Activate it
+$ source venv/bin/activate
 
-Things you may want to cover:
+3. Install requirements use:
+pip install -r requirements.txt
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+4. Run script use command:
+$ venv/bin/python app.py --owner 0x05e7042c3C0753e5B506262047a3D327d3Ac0563 --tx 101 --title 'Finallyy !!!'
