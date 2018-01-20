@@ -3,7 +3,7 @@ default: &default
    encoding: unicode
    database: motivate
    pool: 100
-   host: localhost
+   host: ''
    username: likitung
    password:
 
@@ -12,7 +12,7 @@ development:
   encoding: unicode
   database: motivate
   pool: 100
-  host: localhost
+  host: ''
   username: likitung
   password:
 
@@ -22,7 +22,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  host: localhost
+  host: ''
   username: likitung
   password:
   database: motivate_test
