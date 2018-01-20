@@ -1,7 +1,11 @@
-To install requirements use:
+1. Create virtual environment
+$ virtualenv venv
 
-venv/bin/pip3 install requirements.txt
+2. Activate it
+$ source venv/bin/activate
 
-To run script use command:
+3. Install requirements use:
+pip install -r requirements.txt
 
-venv/bin/python app.py --owner 0x05e7042c3C0753e5B506262047a3D327d3Ac0563 --tx 101 --title 'Finallyy !!!'
+4. Run script use command:
+$ venv/bin/python app.py --owner 0x05e7042c3C0753e5B506262047a3D327d3Ac0563 --tx 101 --title 'Finallyy !!!'
