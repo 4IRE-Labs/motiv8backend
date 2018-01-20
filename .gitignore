@@ -34,3 +34,5 @@ coverage
 .DS_Store
 # Ignore DockStation files
 .env
+
+/config/database.yml

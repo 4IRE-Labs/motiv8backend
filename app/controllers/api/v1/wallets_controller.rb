@@ -14,6 +14,7 @@ module Api::V1
     def show; end
 
     def check_donation
+      
       if params
         @donation = params
         render :check_donation, status: 200
