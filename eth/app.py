@@ -12,8 +12,8 @@ parser.add_argument('--owner', dest='owner',
                    help='address who will receive badge')
 parser.add_argument('--tx', dest='tx',
                    help='Tx that owner sent for donation')
-parser.add_argument('--title', dest='title',
-                   help='Title of badge that user will receive')
+parser.add_argument('--challange', dest='challange',
+                   help='Challange that transaction was sent to')
 
 parser.add_argument('--test', dest='test',
                     help='If yes we will use defaul params')
@@ -22,8 +22,8 @@ args = parser.parse_args()
 
 if args.test == 'yes':
     badge_owner = '0x99a4572656eb49ffeefbe9588f8e7ab0f8d6eb5e'
-    donation_tx = '112'
-    badge_title = 'Test 112'
+    donation_tx = '0xee9f087ca77195ec40a79cd9b44626fc50e5183cb7dbfdf447cf36c9a6892025'
+    challenge = 'Challenge 0'
 elif args.title is None or args.tx is None or args.owner is None:
     parser.print_help()
     exit(0)
@@ -35,7 +35,7 @@ else:
     donation_tx = args.tx
 
     #Define badge title
-    badge_title = args.title
+    challenge = args.challange
 
 ######### TEST RPC CONFIGURATION #########
 
@@ -55,8 +55,11 @@ else:
 
 #########  INFURA CONFIGURATION  #########
 
+#Motiv8ERC20Token: 0x97ce88c86d9e01e381495b2632109e5c9b4d0d6a
+#M8BadgeToken: 0xbaf7ad3d6e97d843a8b5d1bc7b3cd475d5521d2c
+
 w3 = Web3(HTTPProvider("https://rinkeby.infura.io/m6ecrmQM2b6CUWLkBCro"))
-contract_address = '0x00a421dd2d39f49990e15922ffe28a92ef2acd85'
+contract_address = '0xbaf7ad3d6e97d843a8b5d1bc7b3cd475d5521d2c'
 sender_address = '0x99a4572656eb49ffeefbe9588f8e7ab0f8d6eb5e'
 sender_pk = bytes(bytearray.fromhex('1cf8c24523faceab6acc576c4a8eb36cbe2d42308260d95c301f5433002ac3f8'))
 
@@ -87,17 +90,18 @@ transact = {
 
 # Send raw transaction
 ct = ContractTranslator(abi['abi'])
-txdata = ct.encode_function_call("create", [donation_tx, badge_title, badge_owner])
+txHash = Web3.toInt(hexstr=donation_tx)
+txdata = ct.encode_function_call("create", [txHash, challenge, badge_owner])
 
 # Load data with configuration and nonce
 # data = json.load(open('data.txt', 'r'))
-#if 'nonce' not in data:
+# if 'nonce' not in data:
 #    data['nonce'] = w3.eth.getTransactionCount(sender_address)
-#else:
+# else:
 #    nonce = data["nonce"] + 1
-#nonce = max(nonce, w3.eth.getTransactionCount(sender_address))
+# nonce = max(nonce, w3.eth.getTransactionCount(sender_address))
 
-nonce = w3.eth.getTransactionCount(sender_address)
+nonce = w3.eth.getTransactionCount(sender_address, block_identifier="pending")
 
 tx = Transaction(
     nonce=nonce,
@@ -109,8 +113,8 @@ tx = Transaction(
 )
 
 # Save nonce to file
-#data['nonce'] = nonce
-#json.dump(data, open('data.txt', 'w'))
+# data['nonce'] = nonce
+# json.dump(data, open('data.txt', 'w'))
 
 tx.sign(sender_pk)
 
