@@ -36,3 +36,6 @@ coverage
 .env
 
 /config/database.yml
+
+# Ignore venv
+eth/venv/*
