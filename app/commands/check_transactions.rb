@@ -1,29 +1,29 @@
 # coding: utf-8
 
-class CheckMilestoneStartDate
+class CheckTransactions
   prepend SimpleCommand
+  attr_accessor :donations, :transactions
 
-  def initialize
+  def initialize(donations, transactions)
+    @donations = donations
+    @transactions = transactions
   end
 
   def call
-    milestones = Milestone.where(start_date: Date.today.midnight..Date.today.end_of_day).all
-    milestones.each do |milestone|
-      next unless milestone.contract.status == 'started'
-      if milestone.sub_milestone
-        if milestone.sub_milestone.past?
-          milestone.status = :actual
-        else
-          milestone.update(start_date: 1.day.from_now)
-        end
-      else
-        milestone.status = :actual
-      end
+    @response = RestClient.get "http://rinkeby.etherscan.io/api", params: {
+      module: 'account',
+      action: 'txlist',
+      address: @address,
+      startblock: 0,
+      endblock: 1622525,
+      sort: 'asc',
+      apikey: 'KRZ3YKTYGI6YMSGMMKYVRPIC18AX1B6MDQ'
+    }
 
-      milestone.save!
-    end
+
   rescue => exception
-    errors.add(:invitation, exception.to_s)
+    errors.add(:transactions, exception.to_s)
   else
+    JSON.parse(@response)
   end
 end
