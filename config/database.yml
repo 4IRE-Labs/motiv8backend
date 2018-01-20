@@ -31,9 +31,9 @@ test:
 production:
     adapter: postgresql
     encoding: unicode
-    database: motivate
-    pool: 300
-    host: motivate.cnlmxekdkixo.us-west-2.rds.amazonaws.com
+    database: motivate2
+    pool: 100
+    host: motivate2.cnlmxekdkixo.us-west-2.rds.amazonaws.com
     port: 5432
-    username: likitung
+    username: motivate
     password: qazwsxedc123
