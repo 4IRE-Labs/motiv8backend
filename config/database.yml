@@ -1,8 +1,8 @@
 default: &default
    adapter: postgresql
    encoding: unicode
-   database: motiv8
-   pool: 300
+   database: motivate
+   pool: 100
    host: localhost
    username: likitung
    password:
@@ -10,8 +10,8 @@ default: &default
 development:
   adapter: postgresql
   encoding: unicode
-  database: motiv8
-  pool: 300
+  database: motivate
+  pool: 100
   host: localhost
   username: likitung
   password:
@@ -25,15 +25,15 @@ test:
   host: localhost
   username: likitung
   password:
-  database: motiv8
-  
+  database: motivate_test
+
 
 production:
     adapter: postgresql
     encoding: unicode
-    database: motiv8
-#    pool: 300
-#    host:
-#    port: 5432
+    database: motivate
+    pool: 300
+    host: motivate.cnlmxekdkixo.us-west-2.rds.amazonaws.com
+    port: 5432
     username: likitung
     password: qazwsxedc123

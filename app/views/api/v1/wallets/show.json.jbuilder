@@ -1,1 +1,1 @@
-json.data @wallet
+json.merge!@wallet.attributes
