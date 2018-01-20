@@ -1,0 +1,7 @@
+To install requirements use:
+
+venv/bin/pip3 install requirements.txt
+
+To run script use command:
+
+venv/bin/python app.py --owner 0x05e7042c3C0753e5B506262047a3D327d3Ac0563 --tx 101 --title 'Finallyy !!!'
