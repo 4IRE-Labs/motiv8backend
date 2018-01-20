@@ -12,8 +12,8 @@ parser.add_argument('--owner', dest='owner',
                    help='address who will receive badge')
 parser.add_argument('--tx', dest='tx',
                    help='Tx that owner sent for donation')
-parser.add_argument('--challange', dest='challange',
-                   help='Challange that transaction was sent to')
+parser.add_argument('--challenge', dest='challenge',
+                   help='Challenge that transaction was sent to')
 
 parser.add_argument('--test', dest='test',
                     help='If yes we will use defaul params')
@@ -24,7 +24,7 @@ if args.test == 'yes':
     badge_owner = '0x99a4572656eb49ffeefbe9588f8e7ab0f8d6eb5e'
     donation_tx = '0xee9f087ca77195ec40a79cd9b44626fc50e5183cb7dbfdf447cf36c9a6892025'
     challenge = 'Challenge 0'
-elif args.title is None or args.tx is None or args.owner is None:
+elif args.challenge is None or args.tx is None or args.owner is None:
     parser.print_help()
     exit(0)
 else:
@@ -35,7 +35,7 @@ else:
     donation_tx = args.tx
 
     #Define badge title
-    challenge = args.challange
+    challenge = args.challenge
 
 ######### TEST RPC CONFIGURATION #########
 
