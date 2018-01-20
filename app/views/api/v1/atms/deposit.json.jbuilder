@@ -1,1 +1,0 @@
-json.data @banknotes
