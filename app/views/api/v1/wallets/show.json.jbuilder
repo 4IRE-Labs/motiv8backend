@@ -1,1 +1,1 @@
-json.merge!@wallet.attributes
+json.partial! 'wallet', wallet: @wallet

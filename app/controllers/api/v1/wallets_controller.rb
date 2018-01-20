@@ -2,6 +2,10 @@ module Api::V1
   class WalletsController < ApiController
     before_action :set_wallet, only: [:show]
 
+    def index
+      @wallets = Wallet.all
+    end
+
     def create
       @wallet = Wallet.new(wallet_params)
       if @wallet.save

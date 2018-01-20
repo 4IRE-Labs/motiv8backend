@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :v1, defaults: { format: 'json' } do
-      resources :wallets, only: %i[create show] do
+      resources :wallets, only: %i[create show index] do
         collection do
           post 'check-donation', to: 'wallets#check_donation'
         end
