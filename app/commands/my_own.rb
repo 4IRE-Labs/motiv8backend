@@ -1,5 +1,6 @@
 class MyOwn
   def initialize
+    @my_logger ||= Logger.new("#{Rails.root}/log/trans.log")
   end
 
   def tnx_list(address)
@@ -33,13 +34,35 @@ class MyOwn
     send_to_smart_contract(@found_transactions, address)
   end
 
-  def send_to_smart_contract
-    address = '0xFAb1B5373DF39113d81977169394B0cAe97642cC'
-    donations = [{ challegnge: '0x99a4572656eb49FFEEFbe9588f8e7ab0F8D6Eb5e', tnx: '1231231299999999' }]
+  def claim_one_badge(challenge, address)
+
+    found_transactions = []
+    all_trans = tnx_list(address)
+    all_trans['result'].each do |tnx|
+      begin
+        if tnx['to'] == challenge.address
+          found_transactions << { challegnge: tnx['to'], tnx: tnx['hash'] }
+        end
+      rescue => error
+        @my_logger.info "claim_one_badge: #{error}"
+      end
+    end
+
+    send_to_smart_contract(found_transactions, address)
+  end
+
+  def send_to_smart_contract(donations, address)
+    # for the test
+    # address = '0xFAb1B5373DF39113d81977169394B0cAe97642cC'
+    # donations = [{ challegnge: '0x99a4572656eb49FFEEFbe9588f8e7ab0F8D6Eb5e', tnx: '123123134535299999999' }]
 
     donations.each do |don|
-      p "SEND TO --owner #{address} --tx #{don[:tnx]} --challenge #{don[:challegnge]}"
-      system("venv/bin/python app.py --owner #{address} --tx #{don[:tnx]} --challenge #{don[:challegnge]}")
+      begin
+        p "SEND TO --owner #{address} --tx #{don[:tnx]} --challenge #{don[:challegnge]}"
+        system("venv/bin/python app.py --owner #{address} --tx #{don[:tnx]} --challenge #{don[:challegnge]}")
+      rescue => error
+        @my_logger.info "send_to_smart_contract: #{error}"
+      end
     end
   end
 end

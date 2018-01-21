@@ -6,6 +6,7 @@ Rails.application.routes.draw do
           post 'check-donation', to: 'wallets#check_donation'
         end
       end
+      post 'challenges/:id/claim', to: 'challenges#claim_one_badge'
     end
   end
   mount Raddocs::App => '/docs'
