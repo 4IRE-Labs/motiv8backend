@@ -9,7 +9,7 @@ class MyOwn
       action: 'txlist',
       address: address,
       startblock: 0,
-      endblock: 1459000,
+      endblock: 2000000,
       sort: 'asc',
       apikey: 'KRZ3YKTYGI6YMSGMMKYVRPIC18AX1B6MDQ'
     }
