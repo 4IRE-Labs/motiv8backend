@@ -22,6 +22,8 @@ class MyOwn
 
     @transactions = MyOwn.new.tnx_list(address)
 
+    return 'No Transactions' if @transactions['status'] == '0'
+
     @transactions['result'].each do |tnx|
       @donations.each do |don|
         if don.address == tnx['to']
@@ -33,16 +35,17 @@ class MyOwn
   end
 
   def claim_one_badge(challenge, address)
+
     found_transactions = []
     all_trans = tnx_list(address)
     all_trans['result'].each do |tnx|
-      begin
-        if tnx['to'].downcase == challenge.address.downcase
-          found_transactions << { challegnge: tnx['to'], tnx: tnx['hash'] }
-        end
-      rescue => error
-        @my_logger.info "claim_one_badge: #{error}"
-      end
+    p "TNX #{tnx['to'].downcase}"
+    p "CNG #{challenge.address.downcase}"
+    if tnx['to'].downcase == challenge.address.downcase
+      found_transactions << { challegnge: tnx['to'], tnx: tnx['hash'] }
+    else
+      p 'NOT FOUND'
+    end
     end
 
     send_to_smart_contract(found_transactions, address)
