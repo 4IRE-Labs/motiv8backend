@@ -10,7 +10,7 @@ module Api::V1
     private
 
     def set_challenge
-      @challenge = Wallet.find_by(address: params[:id])
+      @challenge = Wallet.find(params[:id])
     end
 
     def challenge_params
