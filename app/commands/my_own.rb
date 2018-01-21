@@ -16,7 +16,6 @@ class MyOwn
     JSON.parse(response)
   end
 
-
   def txn_check(address)
     @donations = Wallet.all
 
@@ -26,17 +25,21 @@ class MyOwn
 
     @transactions['result'].each do |tnx|
       @donations.each do |don|
-        @found_transactions << tnx['to'] if don.address == tnx['to']
+        if don.address == tnx['to']
+          @found_transactions << { challegnge: tnx['to'], tnx: tnx['hash'] }
+        end
       end
     end
-
-    @found_transactions
-    send_to_smartcontract(@found_transactions, address)
+    send_to_smart_contract(@found_transactions, address)
   end
 
-  def send_to_smartcontract(donations, address)
+  def send_to_smart_contract
+    address = '0xFAb1B5373DF39113d81977169394B0cAe97642cC'
+    donations = [{ challegnge: '0x99a4572656eb49FFEEFbe9588f8e7ab0F8D6Eb5e', tnx: '1231231299999999' }]
+
     donations.each do |don|
-      system("venv/bin/python app.py --owner #{address} --tx #{don} --challenge #{don}")
+      p "SEND TO --owner #{address} --tx #{don[:tnx]} --challenge #{don[:challegnge]}"
+      system("venv/bin/python app.py --owner #{address} --tx #{don[:tnx]} --challenge #{don[:challegnge]}")
     end
   end
 end
