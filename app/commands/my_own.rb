@@ -8,8 +8,6 @@ class MyOwn
       module: 'account',
       action: 'txlist',
       address: address,
-      startblock: 0,
-      endblock: 1630661,
       sort: 'asc',
       apikey: 'KRZ3YKTYGI6YMSGMMKYVRPIC18AX1B6MDQ'
     }
@@ -35,12 +33,11 @@ class MyOwn
   end
 
   def claim_one_badge(challenge, address)
-
     found_transactions = []
     all_trans = tnx_list(address)
     all_trans['result'].each do |tnx|
       begin
-        if tnx['to'] == challenge.address
+        if tnx['to'].downcase == challenge.address.downcase
           found_transactions << { challegnge: tnx['to'], tnx: tnx['hash'] }
         end
       rescue => error
